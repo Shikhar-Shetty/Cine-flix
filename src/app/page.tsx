@@ -1,103 +1,218 @@
+"use client";
+import React, { useState, useEffect } from "react";
+import { ArrowRight, Film, Star, Ticket, Play } from "lucide-react";
+import Link from "next/link";
 import Image from "next/image";
 
-export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm/6 text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-[family-name:var(--font-geist-mono)] font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+const LandingPage = () => {
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [isLoaded, setIsLoaded] = useState(false);
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+  const featuredMovies = [
+    {
+      title: "The Dark Knight",
+      tagline: "Why So Serious?",
+      description: "Batman faces the Joker, a criminal mastermind who wants to plunge Gotham into anarchy.",
+      image: "/images/darkKnight.webp",
+      rating: 9.0
+    },
+    {
+      title: "Inception",
+      tagline: "Your mind is the scene of the crime",
+      description: "A thief who steals corporate secrets through the use of dream-sharing technology.",
+      image: "/images/inception.jpg",
+      rating: 8.8
+    },
+    {
+      title: "Dune",
+      tagline: "Beyond fear, destiny awaits",
+      description: "Feature adaptation of Frank Herbert's science fiction novel about the son of a noble family entrusted with the protection of the most valuable asset in the galaxy.",
+      image: "/images/dune.jpeg",
+      rating: 8.5
+    }
+  ];
+
+  // Automatic slide transition
+  useEffect(() => {
+    setIsLoaded(true);
+    const interval = setInterval(() => {
+      setCurrentSlide((prev) => (prev + 1) % featuredMovies.length);
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, [featuredMovies.length]);
+
+  const features = [
+    {
+      icon: <Ticket className="h-10 w-10 text-red-500" />,
+      title: "Easy Booking",
+      description: "Book movie tickets in seconds with our quick, seamless process."
+    },
+    {
+      icon: <Film className="h-10 w-10 text-red-500" />,
+      title: "Huge Selection",
+      description: "Access to thousands of movies across all genres and languages."
+    },
+    {
+      icon: <Star className="h-10 w-10 text-red-500" />,
+      title: "Premium Experience",
+      description: "Choose from standard, IMAX, VIP and luxury theater options."
+    }
+  ];
+
+  return (
+    <div className="font-sans bg-black text-white min-h-screen">
+      <section className="relative h-screen">
+        {featuredMovies.map((movie, index) => (
+          <div 
+            key={index}
+            className={`absolute inset-0 transition-opacity duration-1000 ${
+              currentSlide === index ? "opacity-100" : "opacity-0"
+            }`}
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
+            <div className="absolute inset-0 overflow-hidden">
+              <Image
+                src={movie.image}
+                alt={movie.title}
+                fill
+                className="object-cover"
+                priority={index === 0}
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-black via-black/80 to-transparent" />
+            </div>
+            
+            <div className="relative h-full flex flex-col justify-center max-w-screen-xl mx-auto px-6">
+              <div className="max-w-lg opacity-0 transform translate-y-8 transition-all duration-1000 delay-300"
+                style={{
+                  opacity: currentSlide === index && isLoaded ? 1 : 0,
+                  transform: currentSlide === index && isLoaded ? "translateY(0)" : "translateY(2rem)"
+                }}
+              >
+                <h2 className="text-sm sm:text-base uppercase tracking-widest text-red-500 mb-2 font-medium">Now Showing</h2>
+                <h1 className="text-4xl sm:text-6xl font-bold tracking-tight mb-4">
+                  {movie.title}
+                </h1>
+                <p className="text-xl italic text-gray-300 mb-6">{movie.tagline}</p>
+                <div className="flex items-center gap-2 mb-6">
+                  <Star className="h-5 w-5 text-red-500 fill-current" />
+                  <span className="text-lg font-medium">{movie.rating}/10</span>
+                </div>
+                <p className="text-gray-300 text-lg mb-8">
+                  {movie.description}
+                </p>
+                <Link href="/home" className="inline-flex items-center gap-2 px-8 py-4 bg-red-600 hover:bg-red-700 rounded font-medium text-lg transition-colors">
+                  <Play className="h-5 w-5" fill="currentColor" />
+                  Book Now
+                </Link>
+              </div>
+            </div>
+          </div>
+        ))}
+
+        <div className="absolute bottom-12 left-0 right-0 flex justify-center gap-2">
+          {featuredMovies.map((_, index) => (
+            <button
+              key={index}
+              onClick={() => setCurrentSlide(index)}
+              className={`w-2 h-2 rounded-full transition-all ${
+                currentSlide === index ? "bg-red-500 w-8" : "bg-gray-500 hover:bg-gray-400"
+              }`}
+              aria-label={`Go to slide ${index + 1}`}
             />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+          ))}
         </div>
+        
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-black to-transparent" />
+      </section>
+
+      {/* Main Content */}
+      <main>
+        {/* Welcome Section */}
+        <section className="py-20 bg-gradient-to-b from-black to-gray-900">
+          <div className="max-w-screen-xl mx-auto px-6 text-center">
+            <h2 className="text-4xl font-bold mb-6">Welcome to CineTix</h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-12">
+              Your premier destination for booking movie tickets online. Experience the latest blockbusters, indie films, and classics on the big screen.
+            </p>
+            
+            <Link href="/home" className="inline-flex items-center gap-2 px-8 py-4 bg-red-600 hover:bg-red-700 rounded-lg font-medium text-lg transition-colors">
+              Get Started <ArrowRight className="h-5 w-5" />
+            </Link>
+            
+            <div className="mt-12 text-sm text-gray-400">
+              Join thousands of movie lovers who book with us every day
+            </div>
+          </div>
+        </section>
+        
+        {/* Features Section */}
+        <section className="py-16 bg-gray-900">
+          <div className="max-w-screen-xl mx-auto px-6">
+            <h2 className="text-3xl font-bold text-center mb-12">Why Choose CineTix</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              {features.map((feature, index) => (
+                <div key={index} className="bg-gray-800 rounded-xl p-8 hover:bg-gray-700 transition-colors">
+                  <div className="mb-4">{feature.icon}</div>
+                  <h3 className="text-xl font-semibold mb-3">{feature.title}</h3>
+                  <p className="text-gray-300">{feature.description}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+        
+        {/* CTA Section */}
+        <section className="relative py-24 overflow-hidden">
+          <div className="absolute inset-0 z-0">
+            <Image
+              src="/api/placeholder/1920/600"
+              alt="Background"
+              fill
+              className="object-cover opacity-30"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black to-black/80" />
+          </div>
+          
+          <div className="relative z-10 max-w-screen-xl mx-auto px-6 flex flex-col items-center text-center">
+            <h2 className="text-4xl font-bold mb-6">Ready for the Ultimate Movie Experience?</h2>
+            <p className="text-xl text-gray-300 max-w-2xl mb-10">
+              Create your account now and get access to exclusive deals, early bookings, and special discounts on your favorite movies.
+            </p>
+            
+            <Link href="/home" className="inline-flex items-center gap-2 px-10 py-5 bg-red-600 hover:bg-red-700 rounded-lg font-medium text-xl transition-colors">
+              Get Started Now <ArrowRight className="h-6 w-6" />
+            </Link>
+          </div>
+        </section>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
+      
+      {/* Footer */}
+      <footer className="bg-black py-12 border-t border-gray-800">
+        <div className="max-w-screen-xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <div className="mb-6 md:mb-0">
+              <h2 className="text-2xl font-bold flex items-center">
+                <Film className="h-6 w-6 text-red-500 mr-2" /> CineTix
+              </h2>
+              <p className="text-gray-400 mt-2">Your premiere movie booking service</p>
+            </div>
+            
+            <div className="flex gap-8 text-gray-400">
+              <a href="#" className="hover:text-white transition-colors">About</a>
+              <a href="#" className="hover:text-white transition-colors">Movies</a>
+              <a href="#" className="hover:text-white transition-colors">Theaters</a>
+              <a href="#" className="hover:text-white transition-colors">Contact</a>
+            </div>
+          </div>
+          
+          <div className="mt-12 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+            © {new Date().getFullYear()} CineTix. All rights reserved.
+          </div>
+        </div>
       </footer>
     </div>
   );
-}
+};
+
+export default LandingPage;

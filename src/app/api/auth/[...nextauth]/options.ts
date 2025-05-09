@@ -18,7 +18,6 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Missing credentials");
         }
 
-        // ✅ Find user by username OR email using Prisma
         const user = await prisma.user.findFirst({
           where: {
             OR: [
