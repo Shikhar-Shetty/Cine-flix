@@ -1,4 +1,5 @@
 "use client";
+
 import { Film, Menu, Search, X } from 'lucide-react'
 import React, { useState } from "react";
 import { User } from "lucide-react";

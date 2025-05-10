@@ -4,9 +4,11 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-import { useEffect, useState } from "react";
-import { useSession, SessionProvider } from "next-auth/react";
+import {  SessionProvider } from "next-auth/react";
 import AuthProvider from "../../context/AuthProvider"; // Optional if still needed
+import { Loader2 } from "lucide-react";
+
+import { useSession } from "next-auth/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -19,25 +21,21 @@ const geistMono = Geist_Mono({
 });
 
 function AppLayout({ children }: { children: React.ReactNode }) {
-  const [isClient, setIsClient] = useState(false);
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
-  useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   return (
-    <body
-      className={`min-h-screen flex flex-col ${geistSans.variable} ${geistMono.variable} antialiased`}
-    >
-      {isClient ? (
+    <body className={`min-h-screen flex flex-col ${geistSans.variable} ${geistMono.variable} antialiased`}>
+      {status === "loading" ? (
+        <div className="flex items-center justify-center min-h-screen">
+          <Loader2 className="h-10 w-10 animate-spin text-red-500" />
+        </div>
+      ) : (
         <>
           {session && <Header />}
           <main className="flex-1">{children}</main>
           {session && <Footer />}
         </>
-      ) : (
-        <div>Loading...</div>
       )}
     </body>
   );

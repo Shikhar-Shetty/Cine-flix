@@ -288,10 +288,9 @@ const HomePage = () => {
           <h2 className="text-2xl font-semibold mb-8">Featured Collections</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {/* Collection 1 */}
             <div className="relative h-64 rounded-xl overflow-hidden group cursor-pointer">
               <Image
-                src="/api/placeholder/800/500" 
+                src={"/images/inceptionIm.jpg"} 
                 alt="Oscar Winners" 
                 fill
                 className="w-full h-full object-cover"
@@ -307,10 +306,9 @@ const HomePage = () => {
               </div>
             </div>
             
-            {/* Collection 2 */}
             <div className="relative h-64 rounded-xl overflow-hidden group cursor-pointer">
               <Image 
-                src="/api/placeholder/800/500" 
+                src="/images/darkKnight.webp" 
                 alt="Sci-Fi Adventures" 
                 fill
                 className="w-full h-full object-cover"
@@ -329,7 +327,7 @@ const HomePage = () => {
             {/* Collection 3 */}
             <div className="relative h-64 rounded-xl overflow-hidden group cursor-pointer">
               <Image 
-                src="/api/placeholder/800/500" 
+                src="/images/inception.jpg" 
                 alt="Director Spotlight" 
                 fill
                 className="w-full h-full object-cover"
