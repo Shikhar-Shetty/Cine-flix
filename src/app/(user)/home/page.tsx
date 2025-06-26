@@ -1,10 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import Image from "next/image";
 import Link from "next/link";
 import { Calendar, Check, ChevronRight, Clock, Heart, Info, Play, Star } from "lucide-react";
 import { addBooking } from "../../../../actions/bookings";
+import { useSession } from "next-auth/react";
 
 const sampleMovies = [
   {
@@ -73,12 +74,16 @@ const HomePage = () => {
   const [activeTab, setActiveTab] = useState("trending");
   const featuredMovie = sampleMovies[0]; 
   const [bookingStatus, setBookingStatus] = useState<{[key: number]: 'idle' | 'loading' | 'booked' | 'error'}>({});
-
+  const {data: session, status} = useSession();
+  useEffect(() => {
+    console.log(session?.user);
+  }, [session, status]);
+  
   const handleBookNow = async (movieId: number) => {
     try {
       setBookingStatus(prev => ({ ...prev, [movieId]: 'loading' }));
       
-      const userId = 1; 
+      const userId = session?.user?.id; 
       const bookingDate = new Date();
       
       await addBooking(userId, bookingDate);

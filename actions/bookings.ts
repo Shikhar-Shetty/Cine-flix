@@ -1,5 +1,7 @@
 "use server";
+import { getServerSession } from "next-auth";
 import prisma from "../lib/prisma";
+import { authOptions } from '@/app/api/auth/[...nextauth]/options';
 
 export const addBooking = async (userId: number, bookingDate: Date) => {
   try {
@@ -17,14 +19,12 @@ export const addBooking = async (userId: number, bookingDate: Date) => {
   }
 };
 
-export const getBookings = async (userId: number) => {
+export const getBookings = async () => {
   try {
-    const user = await prisma.user.findFirst({
-      where: { id: userId }
-    });
-    if (!user) throw new Error("User Not authorized ");
+    const session = await getServerSession(authOptions);
+    if(!session?.user) throw new Error("User not Authorized");
     const bookings = await prisma.bookings.findMany({
-      where: { userId: user?.id },
+      where: { userId: session?.user?.id },
       orderBy: { bookingDate: "desc" },
     });
     return bookings;

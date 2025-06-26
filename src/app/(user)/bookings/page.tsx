@@ -8,8 +8,7 @@ const page = async() => {
     const session = await getServerSession(authOptions);
     console.log(session);
     
-    const userId = session?.user.userId;
-    const bookings = await getBookings(userId);
+    const bookings = await getBookings();
     console.log(bookings);
     
 
