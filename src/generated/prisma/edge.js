@@ -134,7 +134,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/home/shikhar-shetty/Desktop/moviebooking/src/generated/prisma",
+      "value": "/home/shikhar-shetty/Desktop/Cine-flix/src/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -148,12 +148,11 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/home/shikhar-shetty/Desktop/moviebooking/prisma/schema.prisma",
+    "sourceFilePath": "/home/shikhar-shetty/Desktop/Cine-flix/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
-    "rootEnvPath": null,
-    "schemaEnvPath": "../../../.env"
+    "rootEnvPath": null
   },
   "relativePath": "../../../prisma",
   "clientVersion": "6.7.0",
@@ -162,17 +161,18 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
+  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
         "fromEnvVar": "DATABASE_URL",
-        "value": "prisma+postgres://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiODRjN2M1Y2EtMjFhYy00MGZmLWIzNzgtZTk4ZjNhN2U2MGRkIiwidGVuYW50X2lkIjoiNzdiODJhYjA0NTdlM2FkYTQ5ODIzZmY4NGZmY2RkMTIwZTM0YTI3NTkyOWJkNzNiNmNlZjM5NTg0Y2VjODM4YyIsImludGVybmFsX3NlY3JldCI6ImQzNDg3ZDZkLTFlMjctNGFiNy1iY2I0LWFjZGQwOTVlMTgzNiJ9.grrbiHC0gJoOJQrfjPAU7oUBzy0tSsTTL10oOGE4zis"
+        "value": null
       }
     }
   },
   "inlineSchema": "// This is your Prisma schema file,\n// learn more about it in the docs: https://pris.ly/d/prisma-schema\n\n// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?\n// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init\n\ngenerator client {\n  provider = \"prisma-client-js\"\n  output   = \"../src/generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel User {\n  id       Int        @id @default(autoincrement())\n  username String     @unique\n  email    String     @unique\n  password String\n  bookings Bookings[]\n}\n\nmodel Bookings {\n  id          Int      @id @default(autoincrement()) // Unique identifier for each booking\n  userId      Int // Reference to User\n  bookingDate DateTime // Date of the booking\n  status      String // Status of the booking, e.g., pending, confirmed, etc.\n  createdAt   DateTime @default(now()) // When the booking was created\n  updatedAt   DateTime @updatedAt // When the booking was last updated\n\n  user User @relation(fields: [userId], references: [id]) // Relation to User\n}\n",
   "inlineSchemaHash": "96311f0252fd9cfaf952fc060681f6cca4ba605e116c5d50aecdbb491fe6d8f6",
-  "copyEngine": false
+  "copyEngine": true
 }
 config.dirname = '/'
 

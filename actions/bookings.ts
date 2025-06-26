@@ -7,7 +7,7 @@ export const addBooking = async (userId: number, bookingDate: Date) => {
       data: {
         userId: userId,
         bookingDate: bookingDate,
-        status: "pending", 
+        status: "pending",
       },
     });
     return newBooking;
@@ -19,8 +19,12 @@ export const addBooking = async (userId: number, bookingDate: Date) => {
 
 export const getBookings = async (userId: number) => {
   try {
+    const user = await prisma.user.findFirst({
+      where: { id: userId }
+    });
+    if (!user) throw new Error("User Not authorized ");
     const bookings = await prisma.bookings.findMany({
-      where: { userId: userId },
+      where: { userId: user?.id },
       orderBy: { bookingDate: "desc" },
     });
     return bookings;
