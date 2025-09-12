@@ -80,9 +80,10 @@ const HomePage = () => {
 
   useEffect(() => {
     console.log(session?.user);
-    if(!session?.user) router.push("/sign-up");
-  }, [session, status]);
-  
+    if (status === "loading") return;
+    if (!session?.user) router.push("/sign-in"); 
+  }, [session, status, router]);
+
   const handleBookNow = async (movieId: number) => {
     try {
       setBookingStatus(prev => ({ ...prev, [movieId]: 'loading' }));
