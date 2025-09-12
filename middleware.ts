@@ -4,16 +4,22 @@ import { getToken } from "next-auth/jwt";
 export async function middleware(request: NextRequest) {
   const token = await getToken({
     req: request,
-    secret: process.env.NEXTAUTH_SECRET, 
+    secret: process.env.NEXTAUTH_SECRET,
+    cookieName: process.env.NODE_ENV === "production"
+      ? "__Secure-next-auth.session-token"
+      : "next-auth.session-token",
   });
+  
+  console.log("TOKEN in middleware:", JSON.stringify(token, null, 2));
 
   const url = request.nextUrl.clone();
-  
+
   console.log("Middleware Token:", token);
 
-  if (url.pathname === "/home" && !token) {
-    return NextResponse.redirect(new URL("/sign-up", request.url));
+  if (url.pathname.startsWith("/home") && !token) {
+    return NextResponse.redirect(new URL("/sign-in", request.url));
   }
+
 
   if ((url.pathname.startsWith("/sign-in") || url.pathname.startsWith("/sign-up")) && token) {
     return NextResponse.redirect(new URL("/home", request.url));
@@ -23,5 +29,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/home", "/sign-in", "/sign-up", "/"],
+  matcher: ["/home/:path*", "/sign-in", "/sign-up", "/", "/bookings"],
 };
