@@ -130,7 +130,7 @@ const LandingPage = () => {
         {/* Welcome Section */}
         <section className="py-20 bg-gradient-to-b from-black to-gray-900">
           <div className="max-w-screen-xl mx-auto px-6 text-center">
-            <h2 className="text-4xl font-bold mb-6">Welcome to CineTix</h2>
+            <h2 className="text-4xl font-bold mb-6">Welcome to CineFlix</h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-12">
               Your premier destination for booking movie tickets online. Experience the latest blockbusters, indie films, and classics on the big screen.
             </p>
@@ -148,7 +148,7 @@ const LandingPage = () => {
         {/* Features Section */}
         <section className="py-16 bg-gray-900">
           <div className="max-w-screen-xl mx-auto px-6">
-            <h2 className="text-3xl font-bold text-center mb-12">Why Choose CineTix</h2>
+            <h2 className="text-3xl font-bold text-center mb-12">Why Choose CineFlix</h2>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               {features.map((feature, index) => (
@@ -192,7 +192,7 @@ const LandingPage = () => {
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="mb-6 md:mb-0">
               <h2 className="text-2xl font-bold flex items-center">
-                <Film className="h-6 w-6 text-red-500 mr-2" /> CineTix
+                <Film className="h-6 w-6 text-red-500 mr-2" /> CineFlix
               </h2>
               <p className="text-gray-400 mt-2">Your premiere movie booking service</p>
             </div>
@@ -206,7 +206,7 @@ const LandingPage = () => {
           </div>
           
           <div className="mt-12 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
-            © {new Date().getFullYear()} CineTix. All rights reserved.
+            © {new Date().getFullYear()} CineFlix. All rights reserved.
           </div>
         </div>
       </footer>

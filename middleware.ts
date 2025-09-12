@@ -8,6 +8,7 @@ export async function middleware(request: NextRequest) {
   });
 
   const url = request.nextUrl.clone();
+  
   console.log("Middleware Token:", token);
 
   if (url.pathname === "/home" && !token) {
@@ -22,5 +23,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/home", "/sign-in", "/sign-up"],
+  matcher: ["/home", "/sign-in", "/sign-up", "/"],
 };

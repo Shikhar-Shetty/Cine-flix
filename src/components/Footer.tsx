@@ -11,7 +11,7 @@ function Footer() {
                             <div className="h-8 w-8 bg-red-600 rounded-full flex items-center justify-center">
                                 <Film className="h-4 w-4 text-white" />
                             </div>
-                            <span className="text-xl font-bold">FILMHUB</span>
+                            <span className="text-xl font-bold">CINEFLIX</span>
                         </div>
                         <p className="text-gray-400 text-sm mb-6">
                             The ultimate destination for movie lovers. Discover, stream, and enjoy the best films from around the world.

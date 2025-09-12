@@ -35,7 +35,7 @@ export default function SignInPage() {
         <div className="max-w-sm mx-auto w-full">
           <div className="flex items-center gap-3 mb-8">
             <Film className="h-8 w-8 text-red-500" />
-            <h1 className="text-2xl font-bold">CineTix</h1>
+            <h1 className="text-2xl font-bold">CineFlix</h1>
           </div>
           
           <div className="flex flex-col">

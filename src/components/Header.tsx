@@ -24,7 +24,7 @@ function Header() {
                         <div className="h-10 w-10 bg-red-600 rounded-full flex items-center justify-center">
                             <Film className="h-6 w-6 text-white" />
                         </div>
-                        <Link href="/" className="text-2xl text-white font-bold tracking-tight">CineTex</Link>
+                        <Link href="/" className="text-2xl text-white font-bold tracking-tight">CineFlix</Link>
                     </div>
 
                     <nav className="hidden md:flex items-center gap-8">

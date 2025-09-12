@@ -50,7 +50,7 @@ export default function SignUp() {
         <div className="max-w-sm mx-auto w-full">
           <div className="flex items-center gap-3 mb-8">
             <Film className="h-8 w-8 text-red-500" />
-            <h1 className="text-2xl font-bold">CineTix</h1>
+            <h1 className="text-2xl font-bold">CineFlix</h1>
           </div>
 
           <div className="flex flex-col">
@@ -66,7 +66,7 @@ export default function SignUp() {
           </div>
 
           <div className="relative text-center text-sm text-gray-500 mb-8">
-            <span className="bg-gray-900 px-4 z-10 relative">Join CineTix Today</span>
+            <span className="bg-gray-900 px-4 z-10 relative">Join CineFlix Today</span>
             <div className="absolute left-0 right-0 top-1/2 border-t border-gray-700 transform -translate-y-1/2" />
           </div>
 
