@@ -10,9 +10,14 @@
 !.yarn/releases
 !.yarn/versions
 
-# testing
+node_modules
 /coverage
 
+/generated/prisma
+generated
+
+dist
+build
 # next.js
 /.next/
 /out/
@@ -35,6 +40,8 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+/src/generated
 
 # typescript
 *.tsbuildinfo
