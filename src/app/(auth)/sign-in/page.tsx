@@ -24,7 +24,7 @@ export default function SignInPage() {
     if (result?.error) {
       setError("Invalid credentials");
     } else {
-      router.push("/");
+      router.push("/home");
     }
   };
 

@@ -1,30 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getToken } from "next-auth/jwt";
 
-export async function middleware(request: NextRequest) {
-  const token = await getToken({
-    req: request,
-    secret: process.env.NEXTAUTH_SECRET,
-  });
+export async function middleware(req: NextRequest) {
+  // remove cookieName entirely
+  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  const url = req.nextUrl.clone();
 
-  console.log("TOKEN in middleware:", JSON.stringify(token, null, 2));
+  console.log("Middleware token:", token);
 
-  const url = request.nextUrl.clone();
-
-  console.log("Middleware Token:", token);
-
-  if (url.pathname.startsWith("/home") && !token) {
-    return NextResponse.redirect(new URL("/sign-in", request.url));
+  if ((url.pathname === "/home" || url.pathname.startsWith("/home/") || url.pathname === "/bookings") && !token) {
+    return NextResponse.redirect(new URL("/sign-in", req.url));
   }
 
-
-  if ((url.pathname.startsWith("/sign-in") || url.pathname.startsWith("/sign-up")) && token) {
-    return NextResponse.redirect(new URL("/home", request.url));
+  if ((url.pathname === "/" || url.pathname === "/sign-in" || url.pathname === "/sign-up") && token) {
+    return NextResponse.redirect(new URL("/home", req.url));
   }
 
   return NextResponse.next();
 }
 
 export const config = {
-  matcher: ["/home/:path*", "/sign-in", "/sign-up", "/", "/bookings"],
+  matcher: ["/home", "/home/:path*", "/sign-in", "/sign-up", "/", "/bookings"],
 };

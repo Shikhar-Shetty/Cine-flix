@@ -6,7 +6,6 @@ import Link from "next/link";
 import { Calendar, Check, ChevronRight, Clock, Heart, Info, Play, Star } from "lucide-react";
 import { addBooking } from "../../../../actions/bookings";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
 
 const sampleMovies = [
   {
@@ -75,14 +74,11 @@ const HomePage = () => {
   const [activeTab, setActiveTab] = useState("trending");
   const featuredMovie = sampleMovies[0]; 
   const [bookingStatus, setBookingStatus] = useState<{[key: number]: 'idle' | 'loading' | 'booked' | 'error'}>({});
-  const {data: session, status} = useSession();
-  const router = useRouter();
+  const {data: session} = useSession();
 
   useEffect(() => {
     console.log(session?.user);
-    if (status === "loading") return;
-    if (!session?.user) router.push("/sign-in"); 
-  }, [session, status, router]);
+  }, [session]);
 
   const handleBookNow = async (movieId: number) => {
     try {

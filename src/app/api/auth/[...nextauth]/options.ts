@@ -55,6 +55,7 @@ export const authOptions: NextAuthOptions = {
         console.log("JWT callback:",user);
         
         token.sub = user.id;
+        token.email = user.email
         token.username = user.username;
       }
       return token;

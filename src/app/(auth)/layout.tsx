@@ -1,10 +1,15 @@
 import React from 'react'
+import AuthProvider from '../../../context/AuthProvider';
 
 const AuthLayout = ({children}: Readonly<{
     children: React.ReactNode;
   }>) => {
   return (
-    <div>{children}</div>
+    <div>
+      <AuthProvider>
+        {children}
+      </AuthProvider>
+    </div>
   )
 }
 
