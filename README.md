@@ -1,4 +1,4 @@
-# 🎬 CineFlix
+# 🎬 CineFlix  (🧪 Experimental project. Not production-ready and no longer actively developed)
 
 A modern movie booking app built for speed, elegance, and developer happiness.
 
